@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .user-header {
+            background: linear-gradient(to bottom, #2979ff, #1976d2);
+            color: #fff;
+            padding: 30px 15px;
+            text-align: center;
+        }
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+        .user-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .user-level {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .balance-box {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .balance-col {text-align: center;}
+        .balance-title {font-size: 16px; margin-bottom: 8px;}
+        .balance-value {font-size: 24px; font-weight: bold;}
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background-color: #eee;
+            margin: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .function-item {
+            background-color: #fff;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .function-item:active{
+            background-color: #e3f2fd;
+        }
+        .function-icon {font-size: 30px; margin-bottom: 10px;}
+        .function-name {font-size: 16px;}
+    </style>
+</head>
+<body>
+    <div class="user-header">
+        <div class="user-avatar">
+            <img id="avatarImg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:none;">
+            <input type="file" accept="image/*" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;" onchange="changeAvatar(this)">
+        </div>
+
+        <div class="user-name">大地生命-岚嫣 15562609971</div>
+        <div class="user-level">铜级贵人</div>
+        <div class="balance-box">
+            <div class="balance-col">
+                <div class="balance-title">助孝基金</div>
+                <div class="balance-value">¥0.00</div>
+            </div>
+            <div class="balance-col">
+                <div class="balance-title">爱心积分</div>
+                <div class="balance-value">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="function-grid">
+        <div class="function-item" onclick="location.href='obit_manage.html'">
+            <div class="function-icon">💜</div>
+            <div class="function-name">讣告管理</div>
+        </div>
+        <div class="function-item" onclick="location.href='memorial_hall.html'">
+            <div class="function-icon">☁️</div>
+            <div class="function-name">纪念堂</div>
+        </div>
+        <div class="function-item" onclick="location.href='memory_card.html'">
+            <div class="function-icon">🪷</div>
+            <div class="function-name">追思卡</div>
+        </div>
+        <div class="function-item" onclick="location.href='memory_msg.html'">
+            <div class="function-icon">💬</div>
+            <div class="function-name">追思留言</div>
+        </div>
+        <div class="function-item" onclick="location.href='sacrifice_list.html'">
+            <div class="function-icon">📋</div>
+            <div class="function-name">祭日清单</div>
+        </div>
+        <div class="function-item" onclick="location.href='visitor_list.html'">
+            <div class="function-icon">👤</div>
+            <div class="function-name">来宾记录</div>
+        </div>
+        <div class="function-item" onclick="location.href='my_review.html'">
+            <div class="function-icon">⭐</div>
+            <div class="function-name">我的评价</div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 头像上传
+        function changeAvatar(input){
+            var img = document.getElementById('avatarImg');
+            if(input.files && input.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+</html>

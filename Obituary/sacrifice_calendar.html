@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>祭日查询</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        .header-bar {
+            background-color: #2979ff;
+            color: #fff;
+            padding: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .form-container {
+            padding: 20px;
+        }
+        .form-item {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cce0ff;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .query-btn {
+            width: 100%;
+            background-color: #2979ff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .result-area {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+        .result-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .result-name {
+            font-weight: bold;
+            color: #2979ff;
+            margin-bottom: 5px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2979ff;
+            margin: 25px 0 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <button class="back-btn" onclick="history.back()">← 返回</button>
+        <span>祭日查询</span>
+    </div>
+
+    <div class="form-container">
+        <div class="form-item">
+            <label class="form-label">逝者姓名</label>
+            <input type="text" class="form-input" id="nameInput" value="高女士">
+        </div>
+        <div class="form-item">
+            <label class="form-label">逝世日期</label>
+            <input type="date" class="form-input" id="dateInput" value="2026-06-09">
+        </div>
+        <button class="query-btn" onclick="calcSacrificeDays()">开始查询</button>
+
+        <div class="result-area" id="resultBox">
+            查询结果将展示在此处
+        </div>
+    </div>
+
+    <script>
+        // 日期格式化
+        function formatDate(dateObj) {
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            return `${year}年${month}月${day}日`;
+        }
+
+        // 获取清明节日期（公历4月5日）
+        function getQingming(year) {
+            return new Date(year, 3, 5);
+        }
+
+        // 获取中元节（农历七月十五，这里简化为公历8月15日，如需精确农历需额外处理）
+        function getZhongyuan(year) {
+            return new Date(year, 7, 15);
+        }
+
+        // 获取寒衣节（农历十月初一，简化为公历11月1日）
+        function getHanyi(year) {
+            return new Date(year, 10, 1);
+        }
+
+        // 获取重阳节（公历10月9日）
+        function getChongyang(year) {
+            return new Date(year, 9, 9);
+        }
+
+        // 获取冬至（公历12月22日）
+        function getDongzhi(year) {
+            return new Date(year, 11, 22);
+        }
+
+        // 核心计算函数
+        function calcSacrificeDays() {
+            const name = document.getElementById('nameInput').value.trim();
+            const dateStr = document.getElementById('dateInput').value;
+            if (!dateStr) {
+                alert('请选择逝世日期');
+                return;
+            }
+
+            const baseDate = new Date(dateStr);
+            const baseYear = baseDate.getFullYear();
+            const resultBox = document.getElementById('resultBox');
+            let html = '';
+
+            // 1. 近亲属祭日（头七/三七/五七/百日/周年）
+            html += `<div class="section-title">逝者忌日相关</div>`;
+            const daysList = [
+                ['头七（第7天）', 7],
+                ['三七（第21天）', 21],
+                ['五七（第35天）', 35],
+                ['七七/断七（第49天）', 49],
+                ['百日（第100天）', 100],
+                ['半年忌日', 180],
+                ['一周年忌日', 365],
+                ['二周年忌日', 365*2],
+                ['三周年忌日', 365*3]
+            ];
+
+            daysList.forEach(([title, days]) => {
+                const d = new Date(baseDate.getTime());
+                d.setDate(d.getDate() + days);
+                html += `
+                    <div class="result-item">
+                        <div class="result-name">${name} - ${title}</div>
+                        <div>${formatDate(d)}</div>
+                    </div>
+                `;
+            });
+
+            // 2. 传统祭祀节日（从当年起未来3年的节日）
+            html += `<div class="section-title">传统祭祀节日</div>`;
+            const festivalList = [
+                ['清明节', getQingming],
+                ['中元节', getZhongyuan],
+                ['寒衣节', getHanyi],
+                ['重阳节', getChongyang],
+                ['冬至', getDongzhi]
+            ];
+
+            for (let y = baseYear; y <= baseYear + 3; y++) {
+                festivalList.forEach(([title, getDate]) => {
+                    const d = getDate(y);
+                    // 只展示在逝世日期之后的节日
+                    if (d >= baseDate) {
+                        html += `
+                            <div class="result-item">
+                                <div class="result-name">${y}年${title}</div>
+                                <div>${formatDate(d)}</div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            resultBox.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

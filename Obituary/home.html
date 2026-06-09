@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            padding: 15px;
+            background: linear-gradient(to bottom, #f0f7ff, #e8f4f8);
+            min-height: 100vh;
+        }
+        .main-header {
+            background: linear-gradient(135deg, #2d7dff, #1a56db);
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(45, 125, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .main-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23ffffff' opacity='0.1'/%3E%3C/svg%3E") repeat;
+            background-size: 20px;
+        }
+        .module-container {
+            margin-bottom: 32px;
+        }
+        .module-title {
+            font-size: 18px;
+            color: #1e3a8a;
+            margin: 0 0 18px;
+            font-weight: 600;
+            border-left: 5px solid #2d7dff;
+            padding: 8px 15px;
+            background: #ffffff;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+        .module-title i {
+            margin-right: 10px;
+            font-size: 16px;
+            color: #2d7dff;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            padding: 22px 10px;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #1e3a8a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e6f0ff;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2d7dff 0%, rgba(45, 125, 255, 0) 100%);
+            opacity: 0.1;
+            border-radius: 0 12px 0 50%;
+        }
+        .nav-btn i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #2d7dff;
+        }
+        .nav-btn:hover, .nav-btn:active {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(45, 125, 255, 0.15);
+            border-color: #2d7dff;
+        }
+        @media (max-width: 375px) {
+            .nav-btn {
+                padding: 18px 8px;
+                font-size: 15px;
+            }
+            .nav-btn i {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-header">综合服务首页</div>
+
+    <!-- 核心业务区 -->
+    <div class="module-container">
+        <div class="module-title"><i class="fas fa-heart-circle-check"></i>核心功能</div>
+        <div class="nav-grid">
+            <a href="obituary_detail.html" class="nav-btn">
+                <i class="fas fa-file-alt"></i>
+                讣告详情
+            </a>
+            <a href="edit_obituary.html" class="nav-btn">
+                <i class="fas fa-pen-to-square"></i>
+                修改讣告
+            </a>
+            <a href="memory_card.html" class="nav-btn">
+                <i class="fas fa-id-card"></i>
+                追思卡制作
+            </a>
+            <a href="memorial_detail.html" class="nav-btn">
+                <i class="fas fa-eye"></i>
+                追思卡详情
+            </a>
+        </div>
+    </div>
+
+    <!-- 查询资讯区 -->
+    <div class="module-container">
+        <div class="module-title"><i class="fas fa-book-open"></i>资讯与查询</div>
+        <div class="nav-grid">
+            <a href="knowledge.html" class="nav-btn">
+                <i class="fas fa-lightbulb"></i>
+                尽孝常识
+            </a>
+            <a href="lucky_day.html" class="nav-btn">
+                <i class="fas fa-calendar-check"></i>
+                吉日查询
+            </a>
+            <a href="sacrifice_calendar.html" class="nav-btn">
+                <i class="fas fa-calendar-days"></i>
+                祭日查询
+            </a>
+            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+                <i class="fas fa-circle-question"></i>
+                更多功能
+            </div>
+        </div>
+    </div>
+
+    <!-- 记录与互动 -->
+    <div class="module-container">
+        <div class="module-title"><i class="fas fa-bookmark"></i>记录与互动</div>
+        <div class="nav-grid">
+            <a href="view_messages.html" class="nav-btn">
+                <i class="fas fa-comment-dots"></i>
+                亲友留言
+            </a>
+            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+                <i class="fas fa-circle-question"></i>
+                更多功能
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人中心 -->
+    <div class="module-container">
+        <div class="module-title"><i class="fas fa-user-circle"></i>个人中心</div>
+        <div class="nav-grid">
+            <a href="user_center.html" class="nav-btn">
+                <i class="fas fa-user-cog"></i>
+                完整版个人中心
+            </a>
+            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+                <i class="fas fa-circle-question"></i>
+                更多功能
+            </div>
+        </div>
+    </div>
+
+    <!-- 帮助与教程 -->
+    <div class="module-container">
+        <div class="module-title"><i class="fas fa-question-circle"></i>帮助与教程</div>
+        <div class="nav-grid">
+            <a href="help.html" class="nav-btn">
+                <i class="fas fa-question"></i>
+                帮助指引
+            </a>
+            <a href="full_tutorial.html" class="nav-btn">
+                <i class="fas fa-video"></i>
+                完整使用教程
+            </a>
+            <a href="tutorial_obituary.html" class="nav-btn">
+                <i class="fas fa-download"></i>
+                讣告领取教程
+            </a>
+            <a href="tutorial_edit.html" class="nav-btn">
+                <i class="fas fa-edit"></i>
+                讣告修改教程
+            </a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

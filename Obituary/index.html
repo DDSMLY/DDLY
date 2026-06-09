@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>大地生命集团 - 线上祭扫·追思平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: #f5f5f5;
+            padding-bottom: 80px;
+        }
+
+        /* 顶部Banner */
+        .top-banner {
+            background: linear-gradient(135deg, #2962ff, #1565c0);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .banner-img {
+            width: 100%;
+            height: 150px;
+            background: url('banner-bg.jpg') center/cover no-repeat;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .banner-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .banner-desc {
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        /* 商家信息 */
+        .merchant-info {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .merchant-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .service-index {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .star {
+            color: #2962ff;
+            margin-right: 5px;
+        }
+        .vip-tag {
+            background: #2962ff;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* 快捷功能 */
+        .quick-func {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 20px 0;
+            margin-bottom: 15px;
+        }
+        .func-item {
+            text-align: center;
+        }
+        .func-icon {
+            width: 50px;
+            height: 50px;
+            background: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 24px;
+            color: #2962ff;
+        }
+        .func-text {
+            font-size: 15px;
+            color: #333;
+        }
+
+        /* 业务板块通用样式 */
+        .section {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .view-all {
+            font-size: 14px;
+            color: #666;
+        }
+        .section-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 服务流程/业务列表 */
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .grid-item {
+            text-align: center;
+        }
+        .grid-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .grid-item-name {
+            font-size: 15px;
+            color: #333;
+        }
+
+        /* 产品列表 */
+        .product-list {
+            border-top: 1px solid #eee;
+        }
+        .product-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .product-img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .product-info p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 评价列表 */
+        .review-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #eee;
+            margin-right: 10px;
+        }
+        .review-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .review-date {
+            font-size: 14px;
+            color: #999;
+            margin-left: auto;
+        }
+        .review-rating {
+            color: #2962ff;
+            margin: 5px 0;
+        }
+        .review-content {
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .review-tags {
+            display: flex;
+            gap: 10px;
+        }
+        .tag {
+            background: #f0f4ff;
+            color: #2962ff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* 底部固定栏 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+        .bottom-btn {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            color: #2962ff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部Banner -->
+    <div class="top-banner">
+        <div class="banner-img"></div>
+        <div class="banner-title">亲人讣告免费制作</div>
+        <div class="banner-desc">请联系以下诚信联盟商 | 服务热线：400-XXXX-XXXX</div>
+    </div>
+
+    <!-- 商家信息 -->
+    <div class="merchant-info">
+        <div class="merchant-name">大地生命集团 - 线上祭扫·追思平台</div>
+        <div class="service-index">
+            <span class="star">★★★★★</span>
+            <span>服务指数</span>
+            <span class="vip-tag">VIP认证</span>
+        </div>
+    </div>
+
+    <!-- 快捷功能 -->
+    <div class="quick-func">
+        <div class="func-item">
+            <div class="func-icon">👤</div>
+            <div class="func-text">联系客服</div>
+        </div>
+        <div class="func-item">
+            <div class="func-icon">🏪</div>
+            <div class="func-text">商家详情</div>
+        </div>
+        <div class="func-item">
+            <div class="func-icon">📍</div>
+            <div class="func-text">商家地址</div>
+        </div>
+    </div>
+
+    <!-- 业务范围 -->
+    <div class="section">
+        <div class="section-title">业务范围</div>
+        <div class="section-content">
+            陪您度过最需要安抚的日子<br>
+            专业殡葬服务 | 寿衣寿盒 | 墓地销售 | 线上祭扫 | 网络追思
+        </div>
+    </div>
+
+    <!-- 服务流程 -->
+    <div class="section">
+        <div class="section-title">
+            <span>服务流程</span>
+            <span class="view-all">查看全部</span>
+        </div>
+        <div class="grid-list">
+            <div class="grid-item">
+                <img src="process1.jpg" alt="流程1">
+                <div class="grid-item-name">骨灰盒使用流程</div>
+            </div>
+            <div class="grid-item">
+                <img src="process2.jpg" alt="流程2">
+                <div class="grid-item-name">寿衣穿戴流程</div>
+            </div>
+            <div class="grid-item">
+                <img src="process3.jpg" alt="流程3">
+                <div class="grid-item-name">线上祭扫流程</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 花艺布置 -->
+    <div class="section">
+        <div class="section-title">
+            <span>花艺布置</span>
+            <span class="view-all">查看全部</span>
+        </div>
+        <div class="grid-list">
+            <div class="grid-item">
+                <img src="flower1.jpg" alt="A套">
+                <div class="grid-item-name">花艺布置A套</div>
+            </div>
+            <div class="grid-item">
+                <img src="flower2.jpg" alt="B套">
+                <div class="grid-item-name">花艺布置B套</div>
+            </div>
+            <div class="grid-item">
+                <img src="flower3.jpg" alt="C套">
+                <div class="grid-item-name">花艺布置C套</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 产品展示 -->
+    <div class="section">
+        <div class="section-title">
+            <span>产品展示</span>
+            <span class="view-all">查看全部</span>
+        </div>
+        <div class="product-list">
+            <div class="product-item">
+                <img class="product-img" src="product1.jpg" alt="寿盒">
+                <div class="product-info">
+                    <h3>咸亨·文化风水盒</h3>
+                    <p>【适用】领导领袖 | 【品名】咸亨·文化风水盒<br>【释义】寓意福寿安康，庇佑后代</p>
+                </div>
+            </div>
+            <div class="product-item">
+                <img class="product-img" src="product2.jpg" alt="寿盒">
+                <div class="product-info">
+                    <h3>含弘·文化风水盒</h3>
+                    <p>【适用】经商考学 | 【品名】含弘·文化风水盒<br>【释义】寓意事业顺利，学业有成</p>
+                </div>
+            </div>
+            <div class="product-item">
+                <img class="product-img" src="product3.jpg" alt="寿盒">
+                <div class="product-info">
+                    <h3>源满·文化风水盒</h3>
+                    <p>【适用】投资家庭 | 【品名】源满·文化风水盒<br>【释义】寓意财源广进，家庭美满</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 服务评价 -->
+    <div class="section">
+        <div class="section-title">服务评价</div>
+        <div class="review-item">
+            <div class="review-header">
+                <div class="review-avatar"></div>
+                <div class="review-name">韩易成</div>
+                <div class="review-date">2024-09-05</div>
+            </div>
+            <div class="review-rating">★★★★★</div>
+            <div class="review-content">让更多朋友可以在网上追思，解心中思念情绪！服务很贴心，流程也很清晰。</div>
+            <div class="review-tags">
+                <span class="tag">价格优惠</span>
+                <span class="tag">热情周到</span>
+            </div>
+        </div>
+        <div class="review-item">
+            <div class="review-header">
+                <div class="review-avatar"></div>
+                <div class="review-name">向日葵</div>
+                <div class="review-date">2024-04-28</div>
+            </div>
+            <div class="review-rating">★★★★★</div>
+            <div class="review-content">大家好，王老师好，张姐姐好，这次非常感谢你们的帮忙，让我们体验到了超乎预期的温暖，过程中获得了家里长辈的认可。</div>
+            <div class="review-tags">
+                <span class="tag">服务专业</span>
+                <span class="tag">贴心周到</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部固定栏 -->
+    <div class="bottom-bar">
+        <div class="bottom-btn">📞 联系商家</div>
+        <div class="bottom-btn">📍 地址导航</div>
+    </div>
+</body>
+</html>

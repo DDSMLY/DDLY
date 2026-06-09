@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>创建追思卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            padding: 15px;
+            padding-bottom: 120px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tab-switch {
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 16px;
+            cursor: pointer;
+            background: #fff;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .tab-item.active {
+            background: #79559e;
+            color: #fff;
+        }
+
+        .form-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-item:last-child {
+            border-bottom: none;
+        }
+
+        .form-label {
+            font-size: 17px;
+            color: #333;
+        }
+
+        .form-input {
+            border: none;
+            font-size: 16px;
+            text-align: right;
+            color: #999;
+            width: 60%;
+        }
+
+        .upload-box {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #ccc;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-box input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .content-title {
+            font-size: 17px;
+            color: #79559e;
+        }
+
+        .template-btn {
+            background: #79559e;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .content-textarea {
+            width: 100%;
+            min-height: 180px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 15px;
+            resize: none;
+        }
+
+        .bottom-btn-group {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: #79559e;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .person2-section {
+            display: none;
+        }
+
+        .template-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #79559e;
+        }
+
+        .template-item {
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-item:hover {
+            background: #f8f0ff;
+            border-color: #79559e;
+        }
+
+        .template-item-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .template-item-content {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .close-modal {
+            display: block;
+            width: 100%;
+            background: #eee;
+            color: #666;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <button class="close-btn" onclick="history.back()">×</button>
+    <div class="header-title">创建追思卡</div>
+    <div style="width:24px;"></div>
+</div>
+
+<div class="tab-switch">
+    <div class="tab-item active" id="tabSingle">单人</div>
+    <div class="tab-item" id="tabDouble">双人</div>
+</div>
+
+<div class="form-card">
+    <div class="form-item">
+        <div class="form-label">逝者姓名</div>
+        <input type="text" class="form-input" placeholder="请输入姓名" id="name1">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝者生日</div>
+        <input type="date" class="form-input" id="birth1">
+    </div>
+    <div class="form-item">
+        <div class="form-label">离世时间</div>
+        <input type="date" class="form-input" id="death1">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝世年龄</div>
+        <input type="number" class="form-input" placeholder="请输入年龄" id="age1">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝者遗相</div>
+        <div class="upload-box">
+            <img class="upload-preview" id="photoPreview1">
+            <span>+</span>
+            <input type="file" accept="image/*" onchange="imgPreview1(this)">
+        </div>
+    </div>
+</div>
+
+<div class="form-card person2-section" id="person2Section">
+    <div class="form-item">
+        <div class="form-label">逝者姓名</div>
+        <input type="text" class="form-input" placeholder="请输入姓名" id="name2">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝者生日</div>
+        <input type="date" class="form-input" id="birth2">
+    </div>
+    <div class="form-item">
+        <div class="form-label">离世时间</div>
+        <input type="date" class="form-input" id="death2">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝世年龄</div>
+        <input type="number" class="form-input" placeholder="请输入年龄" id="age2">
+    </div>
+    <div class="form-item">
+        <div class="form-label">逝者遗相</div>
+        <div class="upload-box">
+            <img class="upload-preview" id="photoPreview2">
+            <span>+</span>
+            <input type="file" accept="image/*" onchange="imgPreview2(this)">
+        </div>
+    </div>
+</div>
+
+<div class="form-card">
+    <div class="content-header">
+        <div class="content-title">追思内容</div>
+        <button class="template-btn" onclick="openTemplateModal()">选择追思模版</button>
+    </div>
+    <textarea class="content-textarea" id="content" placeholder="请输入追思内容"></textarea>
+
+    <div class="form-item" style="margin-top:15px;">
+        <div class="form-label">追思人姓名</div>
+        <input type="text" class="form-input" placeholder="请输入追思人姓名" id="writer">
+    </div>
+</div>
+
+<div class="bottom-btn-group">
+    <button class="btn" id="createBtn">创建追思卡</button>
+    <button class="btn" onclick="window.location.href='memorial_card.html'">我的追思卡</button>
+</div>
+
+<div class="template-modal" id="templateModal">
+    <div class="modal-content">
+        <div class="modal-title">选择追思模板</div>
+        <div id="templateList"></div>
+        <button class="close-modal" onclick="closeTemplateModal()">关闭</button>
+    </div>
+</div>
+
+<script>
+    let img1 = "", img2 = "";
+
+    document.getElementById("tabSingle").onclick = function () {
+        document.getElementById("tabSingle").classList.add("active");
+        document.getElementById("tabDouble").classList.remove("active");
+        document.getElementById("person2Section").style.display = "none";
+    }
+
+    document.getElementById("tabDouble").onclick = function () {
+        document.getElementById("tabDouble").classList.add("active");
+        document.getElementById("tabSingle").classList.remove("active");
+        document.getElementById("person2Section").style.display = "block";
+    }
+
+    function compressImage(file, callback) {
+        if (!file) return callback("");
+        let img = new Image();
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            img.onload = function() {
+                let canvas = document.createElement("canvas");
+                let ctx = canvas.getContext("2d");
+                let w = 300;
+                let h = (img.height / img.width) * w;
+                canvas.width = w;
+                canvas.height = h;
+                ctx.drawImage(img, 0, 0, w, h);
+                canvas.toBlob(function(blob) {
+                    let compressedReader = new FileReader();
+                    compressedReader.onload = function(ev) {
+                        callback(ev.target.result);
+                    };
+                    compressedReader.readAsDataURL(blob);
+                }, "image/jpeg", 0.6);
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function imgPreview1(input) {
+        if (input.files && input.files[0]) {
+            compressImage(input.files[0], function(base64) {
+                img1 = base64;
+                document.getElementById("photoPreview1").src = img1;
+                document.getElementById("photoPreview1").style.display = "block";
+            });
+        }
+    }
+
+    function imgPreview2(input) {
+        if (input.files && input.files[0]) {
+            compressImage(input.files[0], function(base64) {
+                img2 = base64;
+                document.getElementById("photoPreview2").src = img2;
+                document.getElementById("photoPreview2").style.display = "block";
+            });
+        }
+    }
+
+const memorialTemplates = [
+    {title:"致 爸 爸",content:"爸爸，您一生勤劳善良，朴实无华，为了我们这个家，您默默付出了一辈子。您用坚实的肩膀扛起生活的重担，用宽厚的手掌守护我们长大，用无言的行动教会我们做人要正直、要善良、要坚强。如今您虽已离去，但您的音容笑貌永远留在我们心中，您的教诲我们永远铭记。愿您在天堂没有劳累，没有病痛，没有烦恼，只有平安与喜乐。我们会永远怀念您，永远爱您，您的恩情我们永生难忘。"},
+    {title:"致 妈 妈",content:"妈妈，您是世上最温柔、最无私、最伟大的人。您用一生的爱呵护我们成长，用无尽的包容温暖我们的心灵，用默默的付出撑起整个家。您的笑容是我们最大的安慰，您的叮嘱是我们最珍贵的回忆。如今您离我们而去，我们心中充满无尽的思念与不舍。愿天堂没有病痛，没有辛劳，愿您在另一个世界永远幸福、安康、快乐。我们会永远想念您，永远爱您，您永远活在我们心中。"},
+    {title:"致 爷 爷",content:"敬爱的爷爷，您一生忠厚老实，待人诚恳，勤劳节俭，为家庭奉献一生。您的慈爱温暖了我们整个童年，您的言传身教教会我们做人做事。您虽然平凡，却在我们心中无比伟大。如今您安详离去，我们心中充满思念与感恩。愿您在天堂没有痛苦，没有忧愁，愿您与先人们相聚一堂，平安喜乐，自在安详。我们会永远怀念您，传承您的善良与品德。"},
+    {title:"致 奶 奶",content:"亲爱的奶奶，您的温柔善良，您的慈祥笑容，永远刻在我们心底。您一生操劳，为家庭、为子女、为孙辈，付出了全部的爱与精力。您做的饭菜最香，您讲的故事最暖，您的怀抱最安心。如今您已远行，我们心中满是不舍与思念。愿天堂没有病痛，没有辛苦，愿您在另一个世界健康、快乐、安详、自在。我们永远想念您，永远爱您。"},
+    {title:"致 姥 姥",content:"亲爱的姥姥，您一生善良、温和、慈爱，用最朴素的方式爱着家里的每一个人。您的笑容温暖，您的话语贴心，您的关爱陪伴我们长大。您为家庭付出一生，从不计较，从不抱怨，是我们心中最温暖的依靠。如今您已离去，我们心中充满思念与感恩。愿您在天堂无忧无虑，平安健康，幸福常伴。我们会永远怀念您，永远铭记您的恩情。"},
+    {title:"致 姥 爷",content:"敬爱的姥爷，您一生正直、坚强、有担当，用行动教会我们做人要踏实、要善良、要努力。您沉默寡言，却把最深的爱藏在心里；您平凡普通，却是我们心中最可靠的依靠。如今您已安详离去，我们心中充满不舍与思念。愿您在天堂没有劳累，没有病痛，一切安好，自在喜乐。我们永远怀念您，永远敬重您。"},
+    {title:"致 丈 夫",content:"亲爱的丈夫，感谢你这一生陪我风雨同舟，相伴相依。你善良、负责、有担当，给了我最安稳的生活，最温暖的陪伴。我们一起走过岁月，一起经历酸甜苦辣，一起守护家庭。如今你先行一步，留下我无尽的思念与牵挂。愿你在天堂没有烦恼，没有压力，没有病痛，只有安宁与快乐。我会永远记得你，永远爱你，愿来生我们还能再相遇、再相伴。"},
+    {title:"致 妻 子",content:"亲爱的妻子，感谢你这一生选择我、陪伴我、支持我。你温柔、善良、贤惠，把家里打理得温暖舒适，把爱与关怀给了我和孩子。你是我生命中最亮的光，是我最珍贵的人。如今你离我而去，我心中充满无尽的思念与心痛。愿天堂没有痛苦，没有疲惫，愿你在另一个世界永远美丽、快乐、平安。我会永远想你，永远爱你，永远记得我们相伴的每一天。"},
+    {title:"致 儿 子",content:"我的好孩子，你是爸爸妈妈生命中最珍贵的礼物。你的到来给家里带来无数欢笑，你的笑容是我们最大的幸福。爸爸妈妈爱你胜过一切，多想陪你走更长的路，看更多的风景。如今你虽已离开，却永远活在我们心里。愿天堂没有病痛，没有伤害，只有快乐、阳光与温暖。你永远是我们的宝贝，我们永远爱你，永远想念你。"},
+    {title:"致 女 儿",content:"我的小棉袄，你是爸爸妈妈心中最可爱、最温柔、最珍贵的宝贝。你的笑容像阳光一样灿烂，你的声音像歌声一样动听。多想一直守护你，疼你，爱你，陪你长大。如今你去往天堂，留下我们无尽的思念与心痛。愿天堂永远温暖、快乐、美好，没有悲伤，没有痛苦。你永远是我们的小公主，我们永远爱你，永远想你。"},
+    {title:"致 父 亲（正式版）",content:"父亲大人，您一生勤劳正直，品德高尚，为家庭奉献一生，为子女操劳一世。您言传身教，教会我们善良、坚韧、担当与责任。您虽平凡，却在我们心中伟大而光辉。如今您驾鹤西去，我们心中悲痛万分，思念无尽。愿您在九泉之下安息长眠，在天堂之中平安喜乐。我们将永远怀念您，继承您的优良品德，好好生活，不负您一生的期望与教诲。"},
+    {title:"致 母 亲（正式版）",content:"母亲大人，您一生慈悲善良，勤劳俭朴，含辛茹苦养育我们长大，给予我们最无私、最深厚、最永恒的爱。您的恩情比山高，比海深，永生难报。如今您安详离去，我们思念如海，心痛难言。愿您在天堂远离疾苦，永享安乐，幸福常在。我们会永远铭记您的爱，永远怀念您的音容笑貌，您永远活在我们心中。"},
+    {title:"致 老 伴",content:"亲爱的老伴，我们风风雨雨相伴一生，同甘共苦，不离不弃。感谢你一生的陪伴、包容与付出。你是我生命中最重要的人，是我最亲最爱的家人。如今你先行离开，留我一人思念万千。愿你在天堂没有病痛，没有烦恼，平安健康，喜乐无忧。我会好好照顾自己，也会永远想念你，爱你，直到我们再次相聚的那一天。"},
+    {title:"通用·深情缅怀",content:"岁月无声，思念无尽。您虽已离去，但您的音容宛在，精神永存。您一生善良、厚道、勤劳、朴实，为家庭付出所有，为亲人倾尽真心。我们会永远记得您的好，永远怀念您的爱。愿天堂没有病痛，没有离别，没有辛劳，愿您在另一个世界平安、健康、快乐、安详。思念永存心中，爱意永不消散。"},
+    {title:"通用·感恩追思",content:"一生辛劳，一生善良，一生奉献，一生坦荡。您用一生诠释了什么是爱，什么是责任，什么是担当。感恩您的付出，感恩您的陪伴，感恩您的教诲，感恩您给予我们的一切。如今您虽已离去，但您永远活在我们心中。愿您在天堂安息，愿您远离世间疾苦，愿您永远平安喜乐。我们会永远怀念您，永远铭记您的恩情。"},
+    {title:"通用·完整悼词",content:"亲人虽逝，风范长存；音容宛在，思念永存。感谢您这一生为家庭、为亲人付出的一切，您的善良、勤劳、坚强与无私，将永远留在我们心中，成为我们一生的榜样。愿您在天堂没有病痛，没有烦恼，没有劳累，只有安宁、幸福与快乐。我们会永远怀念您，永远爱您，愿您一路走好，安息长眠。"}
+];
+
+    function openTemplateModal() {
+        const templateList = document.getElementById("templateList");
+        templateList.innerHTML = "";
+        memorialTemplates.forEach((item) => {
+            const templateItem = document.createElement("div");
+            templateItem.className = "template-item";
+            templateItem.innerHTML = `<div class="template-item-title">${item.title}</div><div class="template-item-content">${item.content}</div>`;
+            templateItem.onclick = function() {
+                document.getElementById("content").value = item.content;
+                closeTemplateModal();
+            };
+            templateList.appendChild(templateItem);
+        });
+        document.getElementById("templateModal").style.display = "flex";
+    }
+
+    function closeTemplateModal() {
+        document.getElementById("templateModal").style.display = "none";
+    }
+
+    document.getElementById("createBtn").addEventListener("click", function () {
+        try {
+            let name1 = document.getElementById("name1").value?.trim() || "";
+            if (!name1) {
+                alert("请填写逝者姓名");
+                return;
+            }
+
+            let data = {
+                name1: name1,
+                birth1: document.getElementById("birth1").value || "",
+                death1: document.getElementById("death1").value || "",
+                age1: document.getElementById("age1").value || "",
+                img1: img1 || "",
+                name2: document.getElementById("name2").value?.trim() || "",
+                birth2: document.getElementById("birth2").value || "",
+                death2: document.getElementById("death2").value || "",
+                age2: document.getElementById("age2").value || "",
+                img2: img2 || "",
+                content: document.getElementById("content").value || "",
+                writer: document.getElementById("writer").value?.trim() || "",
+                time: new Date().toLocaleString()
+            };
+
+            let list = [];
+            try {
+                let stored = localStorage.getItem("allMemorialCards");
+                list = stored ? JSON.parse(stored) : [];
+                if (!Array.isArray(list)) list = [];
+            } catch (e) {
+                list = [];
+            }
+
+            list.push(data);
+            localStorage.setItem("allMemorialCards", JSON.stringify(list));
+
+            alert("创建成功！");
+            window.location.href = "memorial_card.html";
+        } catch (e) {
+            alert("创建失败：" + e.message);
+        }
+    });
+</script>
+
+</body>
+</html>
