@@ -98,6 +98,10 @@
             min-width: 80px;
             text-align: center;
         }
+        .func-item a {
+            text-decoration: none;
+            display: block;
+        }
         .func-icon {
             width: 60px;
             height: 60px;
@@ -314,21 +318,30 @@
                 <div class="func-icon">👤</div>
                 <div class="func-text">联系客服</div>
             </div>
+            <!-- 服务详情 跳转至 home.html -->
             <div class="func-item">
-                <div class="func-icon">∞</div>
-                <div class="func-text">商家详情</div>
+                <a href="home.html">
+                    <div class="func-icon">∞</div>
+                    <div class="func-text">服务详情</div>
+                </a>
             </div>
             <div class="func-item">
                 <div class="func-icon">📍</div>
                 <div class="func-text">商家地址</div>
             </div>
+            <!-- 联系商家 点击拨号 13065044795 -->
             <div class="func-item">
-                <div class="func-icon">📞</div>
-                <div class="func-text">联系商家</div>
+                <a href="tel:13065044795">
+                    <div class="func-icon">📞</div>
+                    <div class="func-text">联系商家</div>
+                </a>
             </div>
+            <!-- 地址导航 唤起地图导航 -->
             <div class="func-item">
-                <div class="func-icon">🏠</div>
-                <div class="func-text">地址导航</div>
+                <a href="geo:0,0?q=山东省济南市历下区文化西路36-1号大地殡仪服务公司">
+                    <div class="func-icon">🏠</div>
+                    <div class="func-text">地址导航</div>
+                </a>
             </div>
         </div>
 
