@@ -11,57 +11,45 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: "SimSun", serif;
         }
         body {
-            padding: 15px;
-            background: linear-gradient(to bottom, #f0f7ff, #e8f4f8);
-            min-height: 100vh;
+            background: #ffffff;
+            color: #333;
+            padding: 12px;
         }
+        /* 顶部标题栏 沿用整体风格 */
         .main-header {
-            background: linear-gradient(135deg, #2d7dff, #1a56db);
-            color: #fff;
+            background: #f5efe3;
+            color: #5a2e0c;
             text-align: center;
-            padding: 30px 20px;
-            border-radius: 16px;
-            margin-bottom: 30px;
+            padding: 20px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
             font-size: 24px;
-            font-weight: 600;
-            box-shadow: 0 6px 18px rgba(45, 125, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .main-header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23ffffff' opacity='0.1'/%3E%3C/svg%3E") repeat;
-            background-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
         .module-container {
-            margin-bottom: 32px;
+            background: #f5efe3;
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
         .module-title {
-            font-size: 18px;
-            color: #1e3a8a;
-            margin: 0 0 18px;
-            font-weight: 600;
-            border-left: 5px solid #2d7dff;
-            padding: 8px 15px;
-            background: #ffffff;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 22px;
+            color: #5a2e0c;
+            font-weight: bold;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
         }
         .module-title i {
-            margin-right: 10px;
-            font-size: 16px;
-            color: #2d7dff;
+            margin-right: 8px;
+            color: #995511;
         }
+        /* 网格导航布局 */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -76,35 +64,36 @@
             padding: 22px 10px;
             border-radius: 12px;
             font-size: 16px;
-            color: #1e3a8a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            color: #5a2e0c;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             text-decoration: none;
             transition: all 0.3s ease;
-            border: 1px solid #e6f0ff;
-            position: relative;
-            overflow: hidden;
-        }
-        .nav-btn::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #2d7dff 0%, rgba(45, 125, 255, 0) 100%);
-            opacity: 0.1;
-            border-radius: 0 12px 0 50%;
+            border: 1px solid #e6d9c3;
         }
         .nav-btn i {
             font-size: 28px;
             margin-bottom: 10px;
-            color: #2d7dff;
+            color: #995511;
         }
         .nav-btn:hover, .nav-btn:active {
-            background: #f0f7ff;
+            background: #fff8eb;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(45, 125, 255, 0.15);
-            border-color: #2d7dff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        /* 置灰禁用按钮样式 */
+        .nav-btn.disabled {
+            background: #f8f8f8;
+            border: 1px dashed #d8d0c0;
+            color: #a89880;
+            cursor: default;
+        }
+        .nav-btn.disabled i {
+            color: #a89880;
+        }
+        .nav-btn.disabled:hover {
+            transform: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: #f8f8f8;
         }
         @media (max-width: 375px) {
             .nav-btn {
@@ -159,7 +148,7 @@
                 <i class="fas fa-calendar-days"></i>
                 祭日查询
             </a>
-            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+            <div class="nav-btn disabled">
                 <i class="fas fa-circle-question"></i>
                 更多功能
             </div>
@@ -174,7 +163,7 @@
                 <i class="fas fa-comment-dots"></i>
                 亲友留言
             </a>
-            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+            <div class="nav-btn disabled">
                 <i class="fas fa-circle-question"></i>
                 更多功能
             </div>
@@ -189,7 +178,7 @@
                 <i class="fas fa-user-cog"></i>
                 完整版个人中心
             </a>
-            <div class="nav-btn" style="background: #f8f9fa; border: 1px dashed #dee2e6; color: #adb5bd; cursor: default;">
+            <div class="nav-btn disabled">
                 <i class="fas fa-circle-question"></i>
                 更多功能
             </div>
