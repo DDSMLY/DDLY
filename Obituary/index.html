@@ -22,6 +22,7 @@
             aspect-ratio: 3 / 4;
             position: relative;
             overflow: hidden;
+            touch-action: pan-y; /* 允许上下滚动，不冲突左右滑动 */
         }
         .banner-slides {
             width: 100%;
@@ -46,10 +47,10 @@
             display: block;
         }
 
-        /* 轮播指示器 */
+        /* 轮播指示器 —— 已向上移动 */
         .banner-indicators {
             position: absolute;
-            bottom: 25px;
+            bottom: 60px; /* 原25px → 改成60px，圆点上移 */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -369,7 +370,7 @@
         <div class="banner-slides" id="bannerSlides">
             <!-- 第一张图：替换 src 为图床链接，href 为跳转地址 -->
             <div class="banner-slide">
-                <a href="https://跳转链接1.com">
+                <a href="jisi-form.html"> <!-- 改成你的表单页地址 -->
                     <img src="https://tuchuang.org.cn/imgs/2026/06/10/45bd2b3154538364.jpg" alt="轮播图1">
                 </a>
             </div>
@@ -551,13 +552,15 @@
     <!-- 底部空白占位 -->
     <div class="bottom-placeholder"></div>
 
-    <!-- 轮播JS -->
+    <!-- 轮播JS（新增手指滑动） -->
     <script>
         const slides = document.getElementById('bannerSlides');
         const indicators = document.querySelectorAll('.indicator');
+        const bannerWrap = document.querySelector('.top-banner');
         let currentIndex = 1;
 
         function goToSlide(index) {
+            slides.style.transition = 'transform 0.5s ease';
             slides.style.transform = `translateX(-${index * 100}%)`;
             indicators.forEach((ind, i) => {
                 ind.classList.toggle('active', i === index);
@@ -572,11 +575,45 @@
             });
         });
 
-        // 5秒自动轮播，不需要直接删除此行
+        // 5秒自动轮播
         setInterval(() => {
             currentIndex = (currentIndex + 1) % 2;
             goToSlide(currentIndex);
         }, 5000);
+
+        // ========== 移动端手指左右滑动逻辑 ==========
+        let startX = 0;
+        let moveX = 0;
+        let isMoving = false;
+
+        bannerWrap.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            slides.style.transition = 'none';
+        });
+
+        bannerWrap.addEventListener('touchmove', e => {
+            moveX = e.touches[0].clientX - startX;
+            isMoving = true;
+            // 跟随手指拖动
+            slides.style.transform = `translateX(calc(-${currentIndex * 100}% + ${moveX}px))`;
+        });
+
+        bannerWrap.addEventListener('touchend', () => {
+            if (!isMoving) return;
+            slides.style.transition = 'transform 0.5s ease';
+            // 滑动距离判断阈值
+            if (moveX > 60) {
+                // 右滑 → 上一张
+                currentIndex = (currentIndex - 1 + 2) % 2;
+            } else if (moveX < -60) {
+                // 左滑 → 下一张
+                currentIndex = (currentIndex + 1) % 2;
+            }
+            goToSlide(currentIndex);
+            startX = 0;
+            moveX = 0;
+            isMoving = false;
+        });
 
         // ========== 门店弹窗逻辑 ==========
         const addrBtn = document.getElementById('addrBtn');
